@@ -1,0 +1,173 @@
+; Ps2Kb2Hid.INF
+; Copyright (c) 2000-2012 Dritek System Inc.
+
+[version]
+signature="$WINDOWS NT$"
+Provider=%PVDR%
+ClassGuid={745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Class=HIDClass
+DriverVer=08/30/2012,2.02.2001.0803
+CatalogFile=Ps2Kb2Hid.cat
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+[DestinationDirs]
+DefaultDestDir              =11     ;LDID_SYS
+Ps2Kb2HidInst.NT.Copy         =12     ;LDID_DRIVERS
+
+[SourceDisksNames]
+1=%DiskName%,disk1
+
+[SourceDisksFiles]
+aPs2Kb2Hid.sys     =1
+
+; Drivers
+;----------------------------------------------------------
+[Manufacturer]
+%MFTR%=DSI,NTamd64
+
+[DSI.NTamd64]
+%ACPI\DSITabletPCKeyButtons% =Ps2Kb2HidInst,ACPI\VEN_1025&DEV_0759, ACPI\10250759, *10250759
+
+[Ps2Kb2HidInst.NT]
+CopyFiles                   =Ps2Kb2HidInst.NT.Copy
+AddReg                      =Ps2Kb2HidInst.NT.AddReg
+
+[Ps2Kb2HidInst.NT.Copy]
+aPs2Kb2Hid.sys
+
+[Ps2Kb2HidInst.NT.HW]
+AddReg                      =i8042prtInst.NT.HW.AddReg
+
+[Ps2Kb2HidInst.NT.Services]
+AddService                  =Ps2Kb2Hid,0x00000002,Ps2Kb2HidServiceInst,Ps2Kb2HidEventLogInst
+AddService                  =i8042prt,,i8042prtServiceInst,i8042prtEventLogInst
+
+[Ps2Kb2HidInst.NT.AddReg]
+
+;System Control Buttons
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\System Control Buttons","Button Count",0x00010001,0x00000003
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\System Control Buttons\Button 0",,0x00000000,"Power Down"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\System Control Buttons\Button 0","Make Code",0x00010001,0x0000E05e
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\System Control Buttons\Button 0","Usage",0x00010001,0x00000081
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\System Control Buttons\Button 1",,0x00000000,"Sleep"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\System Control Buttons\Button 1","Make Code",0x00010001,0x0000E05f
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\System Control Buttons\Button 1","Usage",0x00010001,0x00000082
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\System Control Buttons\Button 2",,0x00000000,"Wake Up"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\System Control Buttons\Button 2","Make Code",0x00010001,0x0000E063
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\System Control Buttons\Button 2","Usage",0x00010001,0x00000083
+
+;Consumer Control Buttons
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons","Button Count",0x00010001,0x14
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 0",,0x00000000,"EMail"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 0","Make Code",0x00010001,0x0000E06c
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 0","Usage",0x00010001,0x0000018a
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 1",,0x00000000,"Calculator"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 1","Make Code",0x00010001,0x0000E021
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 1","Usage",0x00010001,0x00000192
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 2",,0x00000000,"My Computer"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 2","Make Code",0x00010001,0x0000E06b
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 2","Usage",0x00010001,0x00000194
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 3",,0x00000000,"WWW Home"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 3","Make Code",0x00010001,0x0000E032
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 3","Usage",0x00010001,0x00000223
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 4",,0x00000000,"WWW Search"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 4","Make Code",0x00010001,0x0000E065
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 4","Usage",0x00010001,0x00000221
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 5",,0x00000000,"WWW Back"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 5","Make Code",0x00010001,0x0000E06a
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 5","Usage",0x00010001,0x00000224
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 6",,0x00000000,"WWW Forward"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 6","Make Code",0x00010001,0x0000E069
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 6","Usage",0x00010001,0x00000225
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 7",,0x00000000,"WWW Stop"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 7","Make Code",0x00010001,0x0000E068
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 7","Usage",0x00010001,0x00000226
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 8",,0x00000000,"WWW Refresh"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 8","Make Code",0x00010001,0x0000E067
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 8","Usage",0x00010001,0x00000227
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 9",,0x00000000,"WWW Favorites"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 9","Make Code",0x00010001,0x0000E066
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 9","Usage",0x00010001,0x0000022a
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 10",,0x00000000,"Mute Volume"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 10","Make Code",0x00010001,0x0000E020
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 10","Usage",0x00010001,0x000000e2
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 11",,0x00000000,"Increment Volume"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 11","Make Code",0x00010001,0x0000E030
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 11","Usage",0x00010001,0x000000e9
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 12",,0x00000000,"Decrement Volume"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 12","Make Code",0x00010001,0x0000E02e
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 12","Usage",0x00010001,0x000000ea
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 13",,0x00000000,"Play/Pause"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 13","Make Code",0x00010001,0x0000E022
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 13","Usage",0x00010001,0x000000cd
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 14",,0x00000000,"Stop"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 14","Make Code",0x00010001,0x0000E024
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 14","Usage",0x00010001,0x000000b7
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 15",,0x00000000,"Next Track"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 15","Make Code",0x00010001,0x0000E019
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 15","Usage",0x00010001,0x000000b5
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 16",,0x00000000,"Previous Track"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 16","Make Code",0x00010001,0x0000E010
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 16","Usage",0x00010001,0x000000b6
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 17",,0x00000000,"Media Select"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 17","Make Code",0x00010001,0x0000E06d
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 17","Usage",0x00010001,0x00000183
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 18",,0x00000000,"Brightness Increment"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 18","Make Code",0x00010001,0x0000E04E
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 18","Usage",0x00010001,0x0000006f
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 19",,0x00000000,"Brightness Decrement"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 19","Make Code",0x00010001,0x0000E06F
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Consumer APP Buttons\Button 19","Usage",0x00010001,0x00000070
+
+;Wireless Radio Controls
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Wireless Radio Controls","Control Count",0x00010001,0x00000001
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Wireless Radio Controls\Control 0",,0x00000000,"Wireless Radio Button"
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Wireless Radio Controls\Control 0","Make Code",0x00010001,0x0000E006
+HKLM,"SYSTEM\CurrentControlSet\Control\TabletPC\Legacy Button Conversion\Wireless Radio Controls\Control 0","Usage",0x00010001,0x000000C6
+
+[Ps2Kb2HidEventLogInst]
+AddReg                      =Ps2Kb2HidEventLogAddReg
+
+[Ps2Kb2HidEventLogAddReg]
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\aPs2Kb2Hid.sys"
+HKR,,TypesSupported,0x00010001,7
+
+; -------------- Tablet PC Key Buttons Driver install section
+[Ps2Kb2HidServiceInst]
+DisplayName    = %Ps2Kb2Hid.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ;
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\aPs2Kb2Hid.sys
+LoadOrderGroup = Extended Base
+
+[i8042prtInst.NT.HW.AddReg]
+HKR,,"LowerFilters",0x00010000,"i8042prt"
+
+[i8042prtEventLogInst]
+AddReg                      =i8042prtEventLogAddReg
+
+[i8042prtEventLogAddReg]
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\i8042prt.sys"
+HKR,,TypesSupported,0x00010001,7
+
+[i8042prtServiceInst]
+DisplayName    = %i8042prt.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ;
+ErrorControl   = 0               ; SERVICE_ERROR_IGNORE
+ServiceBinary  = %12%\i8042prt.sys
+LoadOrderGroup = Extended Base
+
+; User readable strings
+;----------------------------------------------------------
+[Strings]
+PVDR= "Dritek System Inc."
+MFTR= "Dritek System Inc."
+ACPI\DSITabletPCKeyButtons="Radio Controller"
+Ps2Kb2Hid.SVCDESC="PS/2 Keyboard to HID Driver"
+i8042prt.SVCDESC="PS/2 Keyboard Port Driver"
+DiskName="Install disk"
+
