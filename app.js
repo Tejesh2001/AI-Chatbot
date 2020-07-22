@@ -54,7 +54,7 @@ async function runSample(msg, projectId = 'tourist-recommendations-kpxlnu') {
   const sessionId = uuid.v4();
 
   // Create a new session
-  const sessionClient = new dialogflow.SessionsClient({keyFilename:"C:\\Users\\tejes\\chatbot\\recommendations.json"});
+  const sessionClient = new dialogflow.SessionsClient({keyFilename:"recommendations.json"});
   const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
   console.log(msg + "  message");
   // The text query request.
