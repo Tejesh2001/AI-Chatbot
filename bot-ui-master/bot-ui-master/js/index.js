@@ -35,7 +35,7 @@ document.getElementById("MSG").value= no.innerHTML;
 $(window).load(function() {
   $messages.mCustomScrollbar();
   setTimeout(function() {
-    serverMessage("Please write ready to start");
+    serverMessage("Hi I am your holiday agent! Please write hi to start!");
   }, 100);
 
 });
@@ -126,6 +126,7 @@ function serverMessage(response2) {
 
   setTimeout(function() {
     $('.message.loading').remove();
+    
     var url = "css/bot.png";
     var img = new Image(200, 200);
     img.src = url;
@@ -146,28 +147,45 @@ function serverMessage(response2) {
       (response2).forEach(element => {       
 
        if (typeof element.text != 'undefined') {
-         showToScreen(element.text.text.toString());
+        console.log("Nan indexjs " +  Number(element.text.text));
+        if (Number.isNaN(Number(element.text.text))) {
+          console.log("Nan Number " + Number(element.text.text));
+          showToScreen(element.text.text);
+          console.log("Nan " +  element.text.text);
+          return;
+        }  
+       //  showToScreen(element.text.text.toString());
          //https://stackoverflow.com/questions/31399411/go-to-next-iteration-in-javascript-foreach-loop
          return;
        }      
       console.log(JSON.stringify(response2.JSON)  + "  This is response");
+      if (element.card == null) {
+        showToScreen("Please reload the screen. Network error occured");
+        return;
+      }
         eleMessage = element.card.title;
         elePicture = element.card.imageUri;
-        console.log(JSON.stringify(element));
-        jMessage = JSON.stringify(eleMessage);
-        console.log("THESE ARE LIST ELEMENTS" +  eleMessage);        
-        console.log(JSON.stringify(i));
+        eleText = element.card.subtitle;
+        console.log(eleText);
+        console.log(JSON.stringify(element));   
+        console.log("This is eleText " + eleText);
         butId = "button_press";
         console.log(butId);
-        console.log(" ELEMESSAGE IS " +  eleMessage);  
+        var label = `<span class="label">${eleText}</span>`
         var card_image = `<div class="card-image" style="background-image: url(${elePicture});"></div>`;
         //var button = `<button id= ${butId} value= ${eleMessage} onclick="myFunction('${eleMessage.toString()}')> ${ eleMessage}</button>`; 
         var button = `<button class = "card-button" button id= ${butId} value= ${eleMessage} onclick="myFunction('${eleMessage}')"> ${ eleMessage}</button>`;               
         console.log(button);
-        var card = `<div class="card"> 
-        ${card_image}
-          <h>${button}</h></div>`
-       cards += `  ` + card + `  `;
+        if (!(eleText == '' || eleText == ' ')) {
+          var card = `<div class="card"> ${label}
+          ${card_image}
+            <h>${button}</h></div>`;
+        } else {
+          var card = `<div class="card">
+          ${card_image}
+            <h>${button}</h></div>`;
+        }
+         cards += `  ` + card + `  `;
       //  htmlDoc = `<div class="card"> <img src= ${url} alt="Person" style="100%>` + but + `</div>`;
         console.log(card);
       //  showToScreen(card);
@@ -187,7 +205,12 @@ function serverMessage(response2) {
 
 
 function showToScreen(response) {
-  $('<div class="message new"><figure class="avatar"><img src="css/bot.png" /></figure>' + response + '</div>').appendTo($('.mCSB_container')).addClass('new');
+
+  if (response == `<div class="row"></div>`) {
+    return;
+  }
+  console.log("THIS IS RESPONSE IN SCREEN " +  response);
+  $('<div class="message new"><figure class="avatar"><img src="css/bot.png"></figure>' + response + '</div>').appendTo($('.mCSB_container')).addClass('new');
 }
 
 function fetchmsg(){

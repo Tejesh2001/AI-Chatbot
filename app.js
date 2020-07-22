@@ -48,7 +48,8 @@ app.post('/send-msg', (request, response) => {
 });
 
 
-
+var messageCounter = 0;
+var records = [];
 async function runSample(msg, projectId = 'tourist-recommendations-kpxlnu') {
   // A unique identifier for the given session
   const sessionId = uuid.v4();
@@ -70,12 +71,60 @@ async function runSample(msg, projectId = 'tourist-recommendations-kpxlnu') {
     },
   };
 
+
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const csvWriter = createCsvWriter({
+    path: 'answers.csv',
+    header: [
+        {id: 'partId', title: 'Participant id'},
+        {id: 'inter', title: 'Interactions'},
+    ]
+});
   // Send request and log result
+  //var messageCounter = 1;
+  var id = -1;
+  var tempId = 0;
   const responses = await sessionClient.detectIntent(request); 
   console.log('Detected intent');
   const result = responses[0].queryResult;
   console.log(`  Query: ${result.queryText}`);
-  console.log(`  Response: ${result.fulfillmentMessages}`);
+  result.fulfillmentMessages.forEach(element => {
+    if (element.text != null) {
+        console.log(element.text.text); 
+       // let id = parseFloat(element.text.text);
+        if (Number.isNaN(Number(element.text.text))) {
+          console.log("Nan " +  element.text.text);
+          return;
+        }     
+        id = parseInt(element.text.text);
+        console.log( "THIS IS ID " + id);     
+    }
+    if (typeof element.card != 'undefined') {      
+      console.log(element.card.title);
+    }
+  });
+ // columnName = `inter${messageCounter}`;
+ // console.log(columnName);
+ if (id != -1) {
+  records.push({partId: id,  inter : msg});
+ }
+ if (result.intent.displayName == 'cities') {
+    records.push({partId : "Participant has completed interaction"});
+    messageCounter = 0;
+}
+
+
+/*
+responses.forEach(element => {
+    element.queryResult;
+});*/
+
+
+csvWriter.writeRecords(records)       // returns a promise
+    .then(() => {
+        console.log('...Done');
+    });
+
   if (result.intent) {
     console.log(`  Intent: ${result.intent.displayName}`);
   } else {
