@@ -29,15 +29,8 @@ app.use(function (req, res, next) {
 
 
 app.post('/send-msg', (request, response) => {
-  console.log("This was reached" + JSON.stringify(request.body));
-  console.log("FEEEfef")
-  console.log("This was reached" + request.body.button_press);
-
   if (typeof request.body.button_press != "undefined") {
-  console.log("Button \n" + request.body.button_press);
   runSample(request.body.button_press).then(data => {
-    console.log('This was sent');
-    console.log({Reply:data});
     response.send({Reply:data})
   })  
 } else {
@@ -57,7 +50,6 @@ async function runSample(msg, projectId = 'tourist-recommendations-kpxlnu') {
   // Create a new session
   const sessionClient = new dialogflow.SessionsClient({keyFilename:"recommendations.json"});
   const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
-  console.log(msg + "  message");
   // The text query request.
   const request = {
     session: sessionPath,
@@ -85,26 +77,18 @@ const csvWriter = createCsvWriter({
   var id = -1;
   var tempId = 0;
   const responses = await sessionClient.detectIntent(request); 
-  console.log('Detected intent');
   const result = responses[0].queryResult;
-  console.log(`  Query: ${result.queryText}`);
   result.fulfillmentMessages.forEach(element => {
     if (element.text != null) {
-        console.log(element.text.text); 
        // let id = parseFloat(element.text.text);
         if (Number.isNaN(Number(element.text.text))) {
-          console.log("Nan " +  element.text.text);
           return;
         }     
         id = parseInt(element.text.text);
-        console.log( "THIS IS ID " + id);     
     }
-    if (typeof element.card != 'undefined') {      
-      console.log(element.card.title);
+    if (typeof element.card != 'undefined') {    
     }
   });
- // columnName = `inter${messageCounter}`;
- // console.log(columnName);
  if (id != -1) {
   records.push({partId: id,  inter : msg});
  }
